@@ -135,7 +135,7 @@ IP=obtener_ip()
 while True:
     ota_isaza()
     time.sleep(10)
-    print("Ciclo Update from Github Version 4")
+    print("Ciclo Update from Github Version 5")
     #configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
     #enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
     #entrar_en_deep_sleep(tiempo_deep_sleep)
