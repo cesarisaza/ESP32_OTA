@@ -9,3 +9,4 @@ while True:
   led.value(0)
   time.sleep(1)
   print("HI")
+  print("Second Test")
