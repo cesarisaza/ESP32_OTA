@@ -102,6 +102,7 @@ def ota_isaza():
 #    firmware_url = "https://raw.githubusercontent.com/juan-Angel32/OTA/main/"
 #    filename = "prueba ota.py"
     ota_updater = OTAUpdater(ssid, contraseña_wifi, firmware_url, filename)
+    ota_updater.download_and_install_update_if_available()
 
 # Procesos principales
 def ejecutar_procesos():
