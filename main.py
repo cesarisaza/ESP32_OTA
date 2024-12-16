@@ -26,7 +26,7 @@ contrasena_remitente = "ofqm urif typx sznd"
 correo_destinatario = "122043975@upq.edu.mx"
 asunto = "Notificación ESP32-3"
 estado = "Activado"
-tiempo_deep_sleep = 30 * 1000  # 1 minuto en milisegundos
+tiempo_deep_sleep = 60 * 1000  # 1 minuto en milisegundos
 
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
