@@ -26,7 +26,7 @@ contrasena_remitente = "ofqm urif typx sznd"
 correo_destinatario = "122043975@upq.edu.mx"
 asunto = "Notificación ESP32-3"
 estado = "Activado"
-tiempo_deep_sleep = 60 * 1000  # 1 minuto en milisegundos
+tiempo_deep_sleep = 30 * 1000  # 1 minuto en milisegundos
 
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
@@ -37,13 +37,11 @@ def conectar_wifi(ssid, contraseña):
         wlan.connect(ssid, contraseña)
         start_time = time.time()
 
-
         while not wlan.isconnected():
             if time.time() - start_time > 10:
                 print("No se pudo conectar a la red WiFi.")
                 return None
             time.sleep(1)
-
 
     print("Conexión exitosa!")
     print("Datos de conexión (IP/netmask/gw/DNS):", wlan.ifconfig())
@@ -74,7 +72,6 @@ def configurar_mqtt(mqtt_server, mqtt_port, client_id):
 # Función para enviar datos por MQTT en formato JSON
 def enviar_datos_mqtt(client, topic, mac, ip, estado):
     data = {
-        #"Identificador": "esp32-3",
         "Identificador": MQTT_CLIENT_ID,
         "IP": ip,
         "Estado": estado
@@ -140,16 +137,12 @@ def ejecutar_procesos():
     # Entrar en deep sleep por 1 minuto
     entrar_en_deep_sleep(tiempo_deep_sleep)
 
-
-
 # %%%%%%%%% MAIN BLUCLE    %%%%%%%%%%%%%%%%%%%%
-#ejecutar_procesos()
-
 while True:
     wlan = conectar_wifi(ssid, contraseña_wifi)
     MAC=obtener_mac(wlan)
     IP=obtener_ip()
-    #ota_isaza()
+    ota_isaza()
     print("Main Bucle")
     #ejecutar_procesos()
     client = configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
@@ -158,7 +151,7 @@ while True:
     entrar_en_deep_sleep(tiempo_deep_sleep)
     machine.reset()
     
-    
+#%%%%%%%%%%%%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%##    
 #import ssd1306
 #i2c = machine.I2C(scl=machine.Pin(4), sda=machine.Pin(5))
 #oled = ssd1306.SSD1306_I2C(128, 64, i2c)
@@ -275,3 +268,6 @@ while True:
 #     print("WIFI Problems so Error Updating main.py")
 # #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
+    
+    
+
