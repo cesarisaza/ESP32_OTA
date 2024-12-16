@@ -98,9 +98,6 @@ def detectar_sleep():
         print("Inicio desde un reinicio o encendido.")
 
 def ota_isaza():
-# Inicializar el OTA Updater
-#    firmware_url = "https://raw.githubusercontent.com/juan-Angel32/OTA/main/"
-#    filename = "prueba ota.py"
     ota_updater = OTAUpdater(ssid, contraseña_wifi, firmware_url, filename)
     ota_updater.download_and_install_update_if_available()
 
@@ -128,18 +125,18 @@ def ejecutar_procesos():
 
 # %%%%%%%%% MAIN BLUCLE    %%%%%%%%%%%%%%%%%%%%
 #ejecutar_procesos()
-wlan = conectar_wifi(ssid, contraseña_wifi)
-MAC=obtener_mac(wlan)
-IP=obtener_ip()
 
 while True:
+    wlan = conectar_wifi(ssid, contraseña_wifi)
+    MAC=obtener_mac(wlan)
+    IP=obtener_ip()
     ota_isaza()
-    time.sleep(10)
-    print("Ciclo Update from Github Version 5")
-    #configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
-    #enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
-    #entrar_en_deep_sleep(tiempo_deep_sleep)
-    #machiene.reset()
+    #time.sleep(10)
+    print("Main Bucle")
+    configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
+    enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
+    entrar_en_deep_sleep(tiempo_deep_sleep)
+    machiene.reset()
     
     
 
@@ -267,3 +264,4 @@ while True:
     
     
     
+
