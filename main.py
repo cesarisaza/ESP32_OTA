@@ -10,6 +10,24 @@ import urequests
 import os
 from ota import OTAUpdater
 
+# Network setup 
+ssid = 'WorkStation1'
+contraseña_wifi = 'tacho11056'
+firmware_url = "https://raw.githubusercontent.com/cesarisaza/ESP32_OTA/refs/heads/main/"
+filename = "main.py"
+
+MQTT_SERVER = "62.146.181.199"
+MQTT_PORT = "1883"
+MQTT_TOPIC = "Bacoon"
+MQTT_CLIENT_ID = "esp32-3"
+
+correo_remitente = "becerrillealjuanangel@gmail.com"
+contrasena_remitente = "ofqm urif typx sznd"
+correo_destinatario = "122043975@upq.edu.mx"
+asunto = "Notificación ESP32-3"
+estado = "Activado"
+tiempo_deep_sleep = 60 * 1000  # 1 minuto en milisegundos
+
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
     wlan = network.WLAN(network.STA_IF)
@@ -56,7 +74,8 @@ def configurar_mqtt(mqtt_server, mqtt_port, client_id):
 # Función para enviar datos por MQTT en formato JSON
 def enviar_datos_mqtt(client, topic, mac, ip, estado):
     data = {
-        "Identificador": "esp32-pruebas",
+        #"Identificador": "esp32-3",
+        "Identificador": MQTT_CLIENT_ID,
         "IP": ip,
         "Estado": estado
     }
@@ -112,8 +131,8 @@ def ejecutar_procesos():
         if client:
             enviar_datos_mqtt(client, MQTT_TOPIC, mac_str, ip, estado)
 
-            mensaje_correo = f"El dispositivo con MAC '{mac_str}' sigue en línea. Su IP es {ip}."
-            enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
+            #mensaje_correo = f"El dispositivo con MAC '{mac_str}' sigue en línea. Su IP es {ip}."
+            #enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
 
         # Desconectar WiFi para ahorrar energía
         red.active(False)
@@ -130,22 +149,16 @@ while True:
     wlan = conectar_wifi(ssid, contraseña_wifi)
     MAC=obtener_mac(wlan)
     IP=obtener_ip()
-    ota_isaza()
-    #time.sleep(10)
+    #ota_isaza()
     print("Main Bucle")
-    configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
+    #ejecutar_procesos()
+    client = configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
     enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
+    time.sleep(3)
     entrar_en_deep_sleep(tiempo_deep_sleep)
-    machiene.reset()
+    machine.reset()
     
     
-
-
-
-
-
-#import Blink_Led
-
 #import ssd1306
 #i2c = machine.I2C(scl=machine.Pin(4), sda=machine.Pin(5))
 #oled = ssd1306.SSD1306_I2C(128, 64, i2c)
@@ -262,6 +275,3 @@ while True:
 #     print("WIFI Problems so Error Updating main.py")
 # #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    
-    
-
