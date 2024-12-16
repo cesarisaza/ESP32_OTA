@@ -8,6 +8,7 @@ import json
 import network
 import urequests
 import os
+from ota import OTAUpdater
 
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
@@ -38,7 +39,7 @@ def obtener_mac(wlan):
     return mac_str
 
 def obtener_ip():
-    ip = red.ifconfig()[0]
+    ip = wlan.ifconfig()[0]
     return ip
 
 # Función para configurar el cliente MQTT
@@ -96,7 +97,7 @@ def detectar_sleep():
     else:
         print("Inicio desde un reinicio o encendido.")
 
-def ota():
+def ota_isaza():
 # Inicializar el OTA Updater
 #    firmware_url = "https://raw.githubusercontent.com/juan-Angel32/OTA/main/"
 #    filename = "prueba ota.py"
@@ -126,14 +127,14 @@ def ejecutar_procesos():
 
 # %%%%%%%%% MAIN BLUCLE    %%%%%%%%%%%%%%%%%%%%
 #ejecutar_procesos()
+wlan = conectar_wifi(ssid, contraseña_wifi)
+MAC=obtener_mac(wlan)
+IP=obtener_ip()
 
 while True:
-    conectar_wifi(ssid, contraseña_wifi)
-    MAC=obtener_mac(wlan)
-    IP=obtener_ip()
-    
-    ota()
-    
+    ota_isaza()
+    time.sleep(5)
+    print("Ciclo Update from Github")
     #configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
     #enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
     #entrar_en_deep_sleep(tiempo_deep_sleep)
