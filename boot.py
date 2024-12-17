@@ -1,0 +1,1 @@
+MQTT_CLIENT_ID = "esp32-3"
