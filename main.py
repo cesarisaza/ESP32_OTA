@@ -20,7 +20,6 @@ filename = "main.py"
 MQTT_SERVER = "62.146.181.199"
 MQTT_PORT = "1883"
 MQTT_TOPIC = "Bacoon"
-MQTT_CLIENT_ID = "esp32-3"
 
 correo_remitente = "cesarisazab@gmail.com"
 contrasena_remitente = "ehbi ymkj fwfu lqwm"
