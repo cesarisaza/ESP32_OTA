@@ -9,6 +9,7 @@ import network
 import urequests
 import os
 from ota import OTAUpdater
+from umail import SMTP
 
 # Network setup 
 ssid = 'WorkStation1'
@@ -21,10 +22,12 @@ MQTT_PORT = "1883"
 MQTT_TOPIC = "Bacoon"
 MQTT_CLIENT_ID = "esp32-3"
 
-correo_remitente = "becerrillealjuanangel@gmail.com"
-contrasena_remitente = "ofqm urif typx sznd"
-correo_destinatario = "122043975@upq.edu.mx"
+correo_remitente = "cesarisazab@gmail.com"
+contrasena_remitente = "ehbi ymkj fwfu lqwm"
+correo_destinatario = "cesar.isaza@upq.edu.mx"
 asunto = "Notificación ESP32-3"
+mensaje_correo = "El dispositivo sigue en línea"
+
 estado = "Activado"
 tiempo_deep_sleep = 60 * 1000  # 1 minuto en milisegundos
 
@@ -117,39 +120,26 @@ def ota_isaza():
     ota_updater = OTAUpdater(ssid, contraseña_wifi, firmware_url, filename)
     ota_updater.download_and_install_update_if_available()
 
-# Procesos principales
-def ejecutar_procesos():
-    red = conectar_wifi(ssid, contraseña_wifi)
-    if red:
-        mac_str = obtener_mac(red)
-        ip = red.ifconfig()[0]
-
-        client = configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
-        if client:
-            enviar_datos_mqtt(client, MQTT_TOPIC, mac_str, ip, estado)
-
-            #mensaje_correo = f"El dispositivo con MAC '{mac_str}' sigue en línea. Su IP es {ip}."
-            #enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
-
-        # Desconectar WiFi para ahorrar energía
-        red.active(False)
-
-    # Entrar en deep sleep por 1 minuto
-    entrar_en_deep_sleep(tiempo_deep_sleep)
-
 # %%%%%%%%% MAIN BLUCLE    %%%%%%%%%%%%%%%%%%%%
 while True:
+    print("Main Bucle")
     wlan = conectar_wifi(ssid, contraseña_wifi)
     MAC=obtener_mac(wlan)
     IP=obtener_ip()
     ota_isaza()
-    print("Main Bucle")
-    #ejecutar_procesos()
     client = configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
     enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
-    time.sleep(3)
+    mensaje_correo=f"El dispositivo con IP {IP} sigue en línea."
+    enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
     entrar_en_deep_sleep(tiempo_deep_sleep)
     machine.reset()
+#%%%%%%%%%%%%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%##
+    
+    
+    
+    
+    
+    
     
 #%%%%%%%%%%%%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%##    
 #import ssd1306
