@@ -25,7 +25,7 @@ asunto = "Notificación ESP32-3"
 mensaje_correo = "El dispositivo sigue en línea"
 
 estado = "Activado"
-tiempo_deep_sleep = 60 * 1000  # 1 minuto en milisegundos
+tiempo_deep_sleep = 30 * 1000  # 1 minuto en milisegundos
 
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
