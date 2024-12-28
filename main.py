@@ -11,9 +11,6 @@ import os
 from ota import OTAUpdater
 from umail import SMTP
 
-# Network setup 
-ssid = 'WorkStation1'
-contraseña_wifi = 'tacho11056'
 firmware_url = "https://raw.githubusercontent.com/cesarisaza/ESP32_OTA/refs/heads/main/"
 filename = "main.py"
 
@@ -79,6 +76,7 @@ def enviar_datos_mqtt(client, topic, mac, ip, estado):
         "Estado": estado
     }
     json_data = json.dumps(data)
+    print(topic)
     client.publish(topic, json_data)
     print(f"Datos enviados: {json_data}")
 
@@ -126,8 +124,8 @@ while True:
     MAC=obtener_mac(wlan)
     IP=obtener_ip()
     ota_isaza()
-    client = configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
-    enviar_datos_mqtt(client,MQTT_TOPIC, MAC, IP, estado)
+    cliente=configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
+    enviar_datos_mqtt(cliente,MQTT_TOPIC, MAC, IP, estado)
     mensaje_correo=f"El dispositivo con IP {IP} sigue en línea."
     enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
     entrar_en_deep_sleep(tiempo_deep_sleep)
@@ -259,4 +257,5 @@ while True:
     
     
     
+
 
