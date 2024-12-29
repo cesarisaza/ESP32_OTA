@@ -126,8 +126,8 @@ while True:
     ota_isaza()
     cliente=configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
     enviar_datos_mqtt(cliente,MQTT_TOPIC, MAC, IP, estado)
-    mensaje_correo=f"El dispositivo con IP {IP} sigue en línea."
-    enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
+    #mensaje_correo=f"El dispositivo con IP {IP} sigue en línea."
+    #enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
     entrar_en_deep_sleep(tiempo_deep_sleep)
     machine.reset()
 #%%%%%%%%%%%%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%#%##
