@@ -25,7 +25,7 @@ asunto = "Notificación ESP32-3"
 mensaje_correo = "El dispositivo sigue en línea"
 
 estado = "Activado"
-tiempo_deep_sleep = 60 * 1000 * 5 # 1 minuto en milisegundos
+tiempo_deep_sleep = 60 * 1000 # 1 minuto en milisegundos
 
 # Función para conectar a la red WiFi
 def conectar_wifi(ssid, contraseña):
@@ -123,9 +123,13 @@ while True:
     wlan = conectar_wifi(ssid, contraseña_wifi)
     MAC=obtener_mac(wlan)
     IP=obtener_ip()
+    sleep(1)
     ota_isaza()
+    sleep(1)
     cliente=configurar_mqtt(MQTT_SERVER, MQTT_PORT, MQTT_CLIENT_ID)
+    sleep(2)
     enviar_datos_mqtt(cliente,MQTT_TOPIC, MAC, IP, estado)
+    sleep(2)
     #mensaje_correo=f"El dispositivo con IP {IP} sigue en línea."
     #enviar_correo_con_reintento(correo_remitente, contrasena_remitente, correo_destinatario, asunto, mensaje_correo)
     entrar_en_deep_sleep(tiempo_deep_sleep)
